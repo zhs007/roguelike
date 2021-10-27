@@ -1,7 +1,7 @@
 package game
 
 import (
-	"fmt"
+	"strings"
 
 	"github.com/xuri/excelize/v2"
 	"github.com/zhs007/goutils"
@@ -41,12 +41,69 @@ func LoadCharacterMgr(fn string) (*CharacterMgr, error) {
 		return nil, err
 	}
 
-	for _, row := range rows {
-		for _, colCell := range row {
-			fmt.Print(colCell, "\t")
+	mgr := &CharacterMgr{}
+	cdi := CharacterDataIndex{}
+
+	for y, row := range rows {
+		cd := &CharacterData{}
+
+		if y == 0 {
+			for x, colCell := range row {
+				c := strings.ToLower(colCell)
+				if c == "cid" {
+					cdi.IDIndex = x
+				} else if c == "name" {
+					cdi.NameIndex = x
+				} else if c == "hp" {
+					cdi.HPIndex = x
+				} else if c == "attack" {
+					cdi.AttackIndex = x
+				}
+			}
+		} else {
+			for x, colCell := range row {
+
+				if x == cdi.IDIndex {
+					cid, err := goutils.String2Int64(colCell)
+					if err != nil {
+						goutils.Error("LoadCharacterMgr:id",
+							zap.String("id", colCell),
+							zap.Error(err))
+
+						return nil, err
+					}
+
+					cd.ID = int(cid)
+				} else if x == cdi.NameIndex {
+					cd.Name = strings.TrimSpace(colCell)
+				} else if x == cdi.HPIndex {
+					cid, err := goutils.String2Int64(colCell)
+					if err != nil {
+						goutils.Error("LoadCharacterMgr:hp",
+							zap.String("hp", colCell),
+							zap.Error(err))
+
+						return nil, err
+					}
+
+					cd.HP = int(cid)
+				} else if x == cdi.AttackIndex {
+					cid, err := goutils.String2Int64(colCell)
+					if err != nil {
+						goutils.Error("LoadCharacterMgr:attack",
+							zap.String("attack", colCell),
+							zap.Error(err))
+
+						return nil, err
+					}
+
+					cd.Attack = int(cid)
+				}
+			}
+
+			mgr.Characters = append(mgr.Characters, cd)
 		}
-		fmt.Println()
 	}
 
-	return nil, nil
+	return mgr, nil
 }
