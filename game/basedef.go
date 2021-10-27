@@ -1,9 +1,14 @@
 package game
 
-// Character -
-type Character struct {
+// CharacterData -
+type CharacterData struct {
 	HP     int `json:"hp"`
 	Attack int `json:"attack"`
+}
+
+// Character -
+type Character struct {
+	Character CharacterData `json:"character"`
 }
 
 // Team -
