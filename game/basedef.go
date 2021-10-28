@@ -57,6 +57,11 @@ func (c *Character) StartAttack(c1 *Character) bool {
 	return false
 }
 
+// Clone - Clone a Character
+func (c *Character) Clone() *Character {
+	return NewCharacter(c.Character)
+}
+
 // Team -
 type Team struct {
 	Characters []*Character `json:"characters"`
