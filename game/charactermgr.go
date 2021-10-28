@@ -9,7 +9,7 @@ import (
 )
 
 type CharacterMgr struct {
-	Characters []*CharacterData
+	MapCharacters map[int]*CharacterData
 }
 
 func LoadCharacterMgr(fn string) (*CharacterMgr, error) {
@@ -41,7 +41,10 @@ func LoadCharacterMgr(fn string) (*CharacterMgr, error) {
 		return nil, err
 	}
 
-	mgr := &CharacterMgr{}
+	mgr := &CharacterMgr{
+		MapCharacters: make(map[int]*CharacterData),
+	}
+
 	cdi := CharacterDataIndex{}
 
 	for y, row := range rows {
@@ -77,7 +80,7 @@ func LoadCharacterMgr(fn string) (*CharacterMgr, error) {
 				} else if x == cdi.NameIndex {
 					cd.Name = strings.TrimSpace(colCell)
 				} else if x == cdi.HPIndex {
-					cid, err := goutils.String2Int64(colCell)
+					hp, err := goutils.String2Int64(colCell)
 					if err != nil {
 						goutils.Error("LoadCharacterMgr:hp",
 							zap.String("hp", colCell),
@@ -86,9 +89,9 @@ func LoadCharacterMgr(fn string) (*CharacterMgr, error) {
 						return nil, err
 					}
 
-					cd.HP = int(cid)
+					cd.HP = int(hp)
 				} else if x == cdi.AttackIndex {
-					cid, err := goutils.String2Int64(colCell)
+					attack, err := goutils.String2Int64(colCell)
 					if err != nil {
 						goutils.Error("LoadCharacterMgr:attack",
 							zap.String("attack", colCell),
@@ -97,13 +100,26 @@ func LoadCharacterMgr(fn string) (*CharacterMgr, error) {
 						return nil, err
 					}
 
-					cd.Attack = int(cid)
+					cd.Attack = int(attack)
 				}
 			}
 
-			mgr.Characters = append(mgr.Characters, cd)
+			mgr.MapCharacters[cd.ID] = cd
 		}
 	}
 
 	return mgr, nil
+}
+
+func (mgr *CharacterMgr) NewCharacter(cid int) (*CharacterData, error) {
+	cd, isok := mgr.MapCharacters[cid]
+	if isok {
+		return cd, nil
+	}
+
+	goutils.Warn("CharacterMgr.NewCharacter",
+		zap.Int("cid", cid),
+		zap.Error(ErrInvalidCharacterID))
+
+	return nil, ErrInvalidCharacterID
 }

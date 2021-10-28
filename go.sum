@@ -40,8 +40,8 @@ github.com/xuri/efp v0.0.0-20210322160811-ab561f5b45e3/go.mod h1:ybY/Jr0T0GTCnYj
 github.com/xuri/excelize/v2 v2.4.1 h1:veeeFLAJwsNEBPBlDepzPIYS1eLyBVcXNZUW79exZ1E=
 github.com/xuri/excelize/v2 v2.4.1/go.mod h1:rSu0C3papjzxQA3sdK8cU544TebhrPUoTOaGPIh0Q1A=
 github.com/yuin/goldmark v1.3.5/go.mod h1:mwnBkeHKe2W/ZEtQ+71ViKU8L12m81fl3OWwC1Zlc8k=
-github.com/zhs007/goutils v0.1.17 h1:EION1Qn4QjQ8lukocEucMo+ghaISqD3UEEJDhLiFwJo=
-github.com/zhs007/goutils v0.1.17/go.mod h1:GomJyN3cVfOT/2njNZE5tp2HOzHng3v7czh20M1xH4Y=
+github.com/zhs007/goutils v0.1.18 h1:tOvaxz2eihgO8zCT7siqY1UVcYn1QxmoCn+b6kE0q10=
+github.com/zhs007/goutils v0.1.18/go.mod h1:GomJyN3cVfOT/2njNZE5tp2HOzHng3v7czh20M1xH4Y=
 go.uber.org/atomic v1.7.0 h1:ADUqmZGgLDDfbSL9ZmPxKTybcoEYHgpYfELNoN+7hsw=
 go.uber.org/atomic v1.7.0/go.mod h1:fEN4uk6kAWBTFdckzkM89CLk9XfWZrxpCo0nPH17wJc=
 go.uber.org/goleak v1.1.10/go.mod h1:8a7PlsEVH3e/a/GLqe5IIrQx6GzcnRmZEufDUTk4A7A=
