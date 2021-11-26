@@ -14,10 +14,13 @@ type CharacterData struct {
 // Clone - Clone a CharacterData
 func (cd *CharacterData) Clone() *CharacterData {
 	return &CharacterData{
-		ID:     cd.ID,
-		Name:   cd.Name,
-		HP:     cd.HP,
-		Attack: cd.Attack,
+		ID:      cd.ID,
+		Name:    cd.Name,
+		HP:      cd.HP,
+		Attack:  cd.Attack,
+		Defence: cd.Defence,
+		Gold:    cd.Gold,
+		Exp:     cd.Exp,
 	}
 }
 
@@ -48,12 +51,22 @@ func NewCharacter(cd *CharacterData) *Character {
 		MaxHP:     cd.HP,
 		HP:        cd.HP,
 		Attack:    cd.Attack,
+		Defence:   cd.Defence,
 	}
+}
+
+// CanAttack -
+func (c *Character) CanAttack(c1 *Character) bool {
+	return c.Attack > c1.Defence
 }
 
 // StartAttack - return isKO
 func (c *Character) StartAttack(c1 *Character) bool {
-	c1.HP -= c.Attack
+	if !c.CanAttack(c1) {
+		return false
+	}
+
+	c1.HP -= c.Attack - c1.Defence
 
 	if c1.HP <= 0 {
 		c1.HP = 0
