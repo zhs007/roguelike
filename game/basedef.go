@@ -2,10 +2,13 @@ package game
 
 // CharacterData -
 type CharacterData struct {
-	ID     int    `json:"id"`
-	Name   string `json:"name"`
-	HP     int    `json:"hp"`
-	Attack int    `json:"attack"`
+	ID      int    `json:"id"`
+	Name    string `json:"name"`
+	HP      int    `json:"hp"`
+	Attack  int    `json:"attack"`
+	Defence int    `json:"defence"`
+	Gold    int    `json:"gold"`
+	Exp     int    `json:"exp"`
 }
 
 // Clone - Clone a CharacterData
@@ -20,10 +23,13 @@ func (cd *CharacterData) Clone() *CharacterData {
 
 // CharacterDataIndex -
 type CharacterDataIndex struct {
-	IDIndex     int
-	NameIndex   int
-	HPIndex     int
-	AttackIndex int
+	IDIndex      int
+	NameIndex    int
+	HPIndex      int
+	AttackIndex  int
+	DefenceIndex int
+	GoldIndex    int
+	ExpIndex     int
 }
 
 // Character -
@@ -32,6 +38,7 @@ type Character struct {
 	MaxHP     int            `json:"maxhp"`
 	HP        int            `json:"hp"`
 	Attack    int            `json:"attack"`
+	Defence   int            `json:"defence"`
 }
 
 // NewCharacter -new a Character with CharacterData

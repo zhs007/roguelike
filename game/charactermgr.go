@@ -61,6 +61,12 @@ func LoadCharacterMgr(fn string) (*CharacterMgr, error) {
 					cdi.HPIndex = x
 				} else if c == "attack" {
 					cdi.AttackIndex = x
+				} else if c == "defence" {
+					cdi.DefenceIndex = x
+				} else if c == "gold" {
+					cdi.GoldIndex = x
+				} else if c == "exp" {
+					cdi.ExpIndex = x
 				}
 			}
 		} else {
@@ -101,6 +107,39 @@ func LoadCharacterMgr(fn string) (*CharacterMgr, error) {
 					}
 
 					cd.Attack = int(attack)
+				} else if x == cdi.DefenceIndex {
+					defence, err := goutils.String2Int64(colCell)
+					if err != nil {
+						goutils.Error("LoadCharacterMgr:defence",
+							zap.String("defence", colCell),
+							zap.Error(err))
+
+						return nil, err
+					}
+
+					cd.Defence = int(defence)
+				} else if x == cdi.GoldIndex {
+					gold, err := goutils.String2Int64(colCell)
+					if err != nil {
+						goutils.Error("LoadCharacterMgr:gold",
+							zap.String("gold", colCell),
+							zap.Error(err))
+
+						return nil, err
+					}
+
+					cd.Gold = int(gold)
+				} else if x == cdi.ExpIndex {
+					exp, err := goutils.String2Int64(colCell)
+					if err != nil {
+						goutils.Error("LoadCharacterMgr:exp",
+							zap.String("exp", colCell),
+							zap.Error(err))
+
+						return nil, err
+					}
+
+					cd.Exp = int(exp)
 				}
 			}
 
