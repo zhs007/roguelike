@@ -45,21 +45,21 @@ func (c *Character) StartAttack(c1 *Character) bool {
 }
 
 // CalcMinDataWithAttackTurns - minact, maxhp
-func (c *Character) CalcMinDataWithAttackTurns(turns int, maxLostHPPer float64, minDefPer float64, maxDefPer float64) *CharacterDataArea {
-	if turns <= 0 || maxLostHPPer >= 1 {
+func (c *Character) CalcMinDataWithAttackTurns(params *MinDataWithAttackTurnsParams) *CharacterDataArea {
+	if !params.IsValid() {
 		return nil
 	}
 
-	turnwin := math.Ceil(float64(c.Character.HP) / float64(turns))
+	turnwin := math.Ceil(float64(c.Character.HP) / float64(params.Turns))
 	minact := int(turnwin) + c.Defence
 
-	maxhp := math.Ceil(float64(c.Attack*(turns-1)) / maxLostHPPer)
+	maxhp := math.Ceil(float64(c.Attack*(params.Turns-1)) / params.MaxLostHPPer)
 
-	mindef := math.Ceil(float64(c.Character.Attack) * minDefPer)
-	maxdef := math.Ceil(float64(c.Character.Attack) * maxDefPer)
+	mindef := math.Ceil(float64(c.Character.Attack) * params.MinDefPer)
+	maxdef := math.Ceil(float64(c.Character.Attack) * params.MaxDefPer)
 
-	mindefhp := math.Ceil(float64((c.Attack-int(mindef))*(turns-1)) / maxLostHPPer)
-	maxdefhp := math.Ceil(float64((c.Attack-int(maxdef))*(turns-1)) / maxLostHPPer)
+	mindefhp := math.Ceil(float64((c.Attack-int(mindef))*(params.Turns-1)) / params.MaxLostHPPer)
+	maxdefhp := math.Ceil(float64((c.Attack-int(maxdef))*(params.Turns-1)) / params.MaxLostHPPer)
 
 	return &CharacterDataArea{
 		MinAttack:    minact,

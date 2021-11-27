@@ -44,3 +44,19 @@ type CharacterDataArea struct {
 	MinDefenceHP int `json:"minDefenceHP"`
 	MaxDefenceHP int `json:"maxDefenceHP"`
 }
+
+// MinDataWithAttackTurnsParams - for CalcMinDataWithAttackTurns
+type MinDataWithAttackTurnsParams struct {
+	Turns        int
+	MaxLostHPPer float64
+	MinDefPer    float64
+	MaxDefPer    float64
+}
+
+func (params *MinDataWithAttackTurnsParams) IsValid() bool {
+	if params.Turns <= 0 || params.MaxLostHPPer >= 1 {
+		return false
+	}
+
+	return true
+}

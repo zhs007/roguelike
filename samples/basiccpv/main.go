@@ -20,6 +20,7 @@ func main() {
 		}
 		c0 := game.NewCharacter(cd0)
 
+		// Header
 		f.SetCellValue("Sheet1", goutils.Pos2Cell(hp, 0), fmt.Sprintf("hp%vatk%v", hp, tv-hp))
 		f.SetCellValue("Sheet2", goutils.Pos2Cell(hp, 0), fmt.Sprintf("hp%vatk%v", hp, tv-hp))
 

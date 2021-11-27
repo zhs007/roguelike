@@ -8,6 +8,8 @@ import (
 	"go.uber.org/zap"
 )
 
+type FuncOnCharacterData func(*CharacterData)
+
 type CharacterMgr struct {
 	MapCharacters map[int]*CharacterData
 }
@@ -174,4 +176,10 @@ func (mgr *CharacterMgr) NewCharacter(cid int) (*Character, error) {
 		zap.Error(ErrInvalidCharacterID))
 
 	return nil, ErrInvalidCharacterID
+}
+
+func (mgr *CharacterMgr) ForEachCharacterData(onCharacterData FuncOnCharacterData) {
+	for _, v := range mgr.MapCharacters {
+		onCharacterData(v)
+	}
 }
