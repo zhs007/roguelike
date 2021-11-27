@@ -150,10 +150,23 @@ func LoadCharacterMgr(fn string) (*CharacterMgr, error) {
 	return mgr, nil
 }
 
-func (mgr *CharacterMgr) NewCharacter(cid int) (*CharacterData, error) {
+func (mgr *CharacterMgr) GetCharacterData(cid int) (*CharacterData, error) {
 	cd, isok := mgr.MapCharacters[cid]
 	if isok {
 		return cd, nil
+	}
+
+	goutils.Warn("CharacterMgr.GetCharacterData",
+		zap.Int("cid", cid),
+		zap.Error(ErrInvalidCharacterID))
+
+	return nil, ErrInvalidCharacterID
+}
+
+func (mgr *CharacterMgr) NewCharacter(cid int) (*Character, error) {
+	cd, isok := mgr.MapCharacters[cid]
+	if isok {
+		return NewCharacter(cd), nil
 	}
 
 	goutils.Warn("CharacterMgr.NewCharacter",

@@ -35,54 +35,12 @@ type CharacterDataIndex struct {
 	ExpIndex     int
 }
 
-// Character -
-type Character struct {
-	Character *CharacterData `json:"character"`
-	MaxHP     int            `json:"maxhp"`
-	HP        int            `json:"hp"`
-	Attack    int            `json:"attack"`
-	Defence   int            `json:"defence"`
-}
-
-// NewCharacter -new a Character with CharacterData
-func NewCharacter(cd *CharacterData) *Character {
-	return &Character{
-		Character: cd,
-		MaxHP:     cd.HP,
-		HP:        cd.HP,
-		Attack:    cd.Attack,
-		Defence:   cd.Defence,
-	}
-}
-
-// CanAttack -
-func (c *Character) CanAttack(c1 *Character) bool {
-	return c.Attack > c1.Defence
-}
-
-// StartAttack - return isKO
-func (c *Character) StartAttack(c1 *Character) bool {
-	if !c.CanAttack(c1) {
-		return false
-	}
-
-	c1.HP -= c.Attack - c1.Defence
-
-	if c1.HP <= 0 {
-		c1.HP = 0
-
-		return true
-	}
-
-	return false
-}
-
-// Clone - Clone a Character
-func (c *Character) Clone() *Character {
-	return NewCharacter(c.Character)
-}
-
-// Team -
-type Team struct {
-	Characters []*Character `json:"characters"`
+// CharacterDataArea -
+type CharacterDataArea struct {
+	NoDefenceHP  int `json:"noDefenceHP"`
+	MinAttack    int `json:"minAttack"`
+	MinDef       int `json:"minDefence"`
+	MaxDef       int `json:"maxDefence"`
+	MinDefenceHP int `json:"minDefenceHP"`
+	MaxDefenceHP int `json:"maxDefenceHP"`
 }
