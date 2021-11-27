@@ -100,5 +100,23 @@ func main() {
 			MinDefPer:    0.4,
 			MaxDefPer:    0.8,
 		},
+		{
+			Turns:        3,
+			MaxLostHPPer: 0.2,
+			MinDefPer:    0.4,
+			MaxDefPer:    0.8,
+		},
+		{
+			Turns:        4,
+			MaxLostHPPer: 0.2,
+			MinDefPer:    0.4,
+			MaxDefPer:    0.8,
+		},
+		{
+			Turns:        5,
+			MaxLostHPPer: 0.2,
+			MinDefPer:    0.4,
+			MaxDefPer:    0.8,
+		},
 	})
 }
