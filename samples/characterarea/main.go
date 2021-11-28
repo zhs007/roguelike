@@ -35,6 +35,14 @@ func saveCharacterDataArea(mgrCharacter *game.CharacterMgr, fn string, params []
 		f.SetCellValue(sheet, goutils.Pos2Cell(minx+i*cdalen+5, 0), fmt.Sprintf("maxDefenceHP%v", i))
 	}
 
+	minx2 := minx + cdalen*len(params)
+	f.SetCellValue(sheet, goutils.Pos2Cell(minx2, 0), "minHP")
+	f.SetCellValue(sheet, goutils.Pos2Cell(minx2+1, 0), "maxHP")
+	f.SetCellValue(sheet, goutils.Pos2Cell(minx2+2, 0), "minAttack")
+	f.SetCellValue(sheet, goutils.Pos2Cell(minx2+3, 0), "maxAttack")
+	f.SetCellValue(sheet, goutils.Pos2Cell(minx2+4, 0), "minDefence")
+	f.SetCellValue(sheet, goutils.Pos2Cell(minx2+5, 0), "maxDefence")
+
 	row := 1
 	mgrCharacter.ForEachCharacterData(func(cd *game.CharacterData) {
 		f.SetCellValue(sheet, goutils.Pos2Cell(0, row), cd.ID)
@@ -44,6 +52,13 @@ func saveCharacterDataArea(mgrCharacter *game.CharacterMgr, fn string, params []
 		f.SetCellValue(sheet, goutils.Pos2Cell(4, row), cd.Defence)
 		f.SetCellValue(sheet, goutils.Pos2Cell(5, row), cd.Gold)
 		f.SetCellValue(sheet, goutils.Pos2Cell(6, row), cd.Exp)
+
+		minhp := 0
+		maxhp := 0
+		minack := 0
+		maxack := 0
+		mindef := 0
+		maxdef := 0
 
 		for i, v := range params {
 			c := game.NewCharacter(cd)
@@ -55,7 +70,79 @@ func saveCharacterDataArea(mgrCharacter *game.CharacterMgr, fn string, params []
 			f.SetCellValue(sheet, goutils.Pos2Cell(minx+i*cdalen+3, row), fmt.Sprintf("%v", cda.MaxDef))
 			f.SetCellValue(sheet, goutils.Pos2Cell(minx+i*cdalen+4, row), fmt.Sprintf("%v", cda.MinDefenceHP))
 			f.SetCellValue(sheet, goutils.Pos2Cell(minx+i*cdalen+5, row), fmt.Sprintf("%v", cda.MaxDefenceHP))
+
+			if i == 0 {
+				minhp = cda.NoDefenceHP
+				maxhp = cda.NoDefenceHP
+				minack = cda.MinAttack
+				maxack = cda.MinAttack
+				mindef = cda.MinDef
+				maxdef = cda.MaxDef
+
+				if minhp > cda.MinDefenceHP {
+					minhp = cda.MinDefenceHP
+				}
+
+				if maxhp < cda.MinDefenceHP {
+					maxhp = cda.MinDefenceHP
+				}
+
+				if minhp > cda.MaxDefenceHP {
+					minhp = cda.MaxDefenceHP
+				}
+
+				if maxhp < cda.MaxDefenceHP {
+					maxhp = cda.MaxDefenceHP
+				}
+			} else {
+				if minhp > cda.NoDefenceHP {
+					minhp = cda.NoDefenceHP
+				}
+
+				if maxhp < cda.NoDefenceHP {
+					maxhp = cda.NoDefenceHP
+				}
+
+				if minhp > cda.MinDefenceHP {
+					minhp = cda.MinDefenceHP
+				}
+
+				if maxhp < cda.MinDefenceHP {
+					maxhp = cda.MinDefenceHP
+				}
+
+				if minhp > cda.MaxDefenceHP {
+					minhp = cda.MaxDefenceHP
+				}
+
+				if maxhp < cda.MaxDefenceHP {
+					maxhp = cda.MaxDefenceHP
+				}
+
+				if minack > cda.MinAttack {
+					minack = cda.MinAttack
+				}
+
+				if maxack < cda.MinAttack {
+					maxack = cda.MinAttack
+				}
+
+				if mindef > cda.MinDef {
+					mindef = cda.MinDef
+				}
+
+				if maxdef < cda.MaxDef {
+					maxdef = cda.MaxDef
+				}
+			}
 		}
+
+		f.SetCellValue(sheet, goutils.Pos2Cell(minx2, row), fmt.Sprintf("%v", minhp))
+		f.SetCellValue(sheet, goutils.Pos2Cell(minx2+1, row), fmt.Sprintf("%v", maxhp))
+		f.SetCellValue(sheet, goutils.Pos2Cell(minx2+2, row), fmt.Sprintf("%v", minack))
+		f.SetCellValue(sheet, goutils.Pos2Cell(minx2+3, row), fmt.Sprintf("%v", maxack))
+		f.SetCellValue(sheet, goutils.Pos2Cell(minx2+4, row), fmt.Sprintf("%v", mindef))
+		f.SetCellValue(sheet, goutils.Pos2Cell(minx2+5, row), fmt.Sprintf("%v", maxdef))
 
 		row++
 	})
